@@ -78,14 +78,14 @@ class Componente {
 		$respcomp = mysql_query("select * from componentes where visible='1' and url='".$filtrar."'");
 		$comp = mysql_fetch_array($respcomp);
 		if(empty($_GET['lagc'])){ ?>
+			<!--<article class="componente">-->
+			<!--	<h2>Descripción</h2>-->
+			<!--	<div class="descripcion">-->
+			<!--		<?php //$comp['descripcion']; ?>-->
+			<!--	</div>-->
+			<!--</article>-->
 			<article class="componente">
-				<h2>Descripción</h2>
-				<div class="descripcion">
-					<?=$comp['descripcion']; ?>
-				</div>
-			</article>
-			<article class="componente">
-				<h2>Bienvenido a RRHH</h2>
+				<h2>Bienvenido</h2>
 				<div class="descripcion">
 					Sistema de RRHH
 				</div>

@@ -1,13 +1,13 @@
 <?php
 class LagcConfig {
     //Datos del Sitio
-    var $lagcmail = 'luisgago@maestro21.com';
-    var $lagcurl = 'http://localhost/walterpenaloza.edu.pe/sistema/';
+    var $lagcmail = 'hola@luisgagocasas.com';
+    var $lagcurl = 'https://luisgagocasas-luisgagocasas.c9.io/sistema/';
 
     //Mysql
-    var $lagclocal = 'localhost';
-    var $lagcbd = 'walterpenaloza';
-    var $lagcuser = 'luisgago';
+    var $lagclocal = '127.0.0.1';
+    var $lagcbd = 'sistema';
+    var $lagcuser = 'luisgagocasas';
     var $lagcpass = '';
 
     //Sitio

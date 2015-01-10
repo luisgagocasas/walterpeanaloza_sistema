@@ -22,7 +22,7 @@ function sede_nombre($val1,$val2){
 ?>
 <div style="margin:10px auto 0px auto;">
 	Bienvenido, <b><?=$_COOKIE["lgnombres"]." ".$_COOKIE["lgapellidos"]; ?></b></br>
-	A contunuación te presentamos el resumen de tus actividades en la empresa.</br></br>
+	A contunuación te presentamos el resumen de tus actividades del colegio.</br></br>
 	<?php
 	$respuser = mysql_query("select * from usuarios where id='".$_COOKIE["user"]."'");
     $usuario = mysql_fetch_array($respuser);
