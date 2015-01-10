@@ -4,8 +4,8 @@ Sistema de RRHH
 
 ### config.php ###
 
-* var $lagcmail = 'luisgago@maestro21.com'; //correo de soporte
-* var $lagcurl = 'http://localhost:8080/rrhh/'; //URL de la aplición
+* var $lagcmail = 'luisgago@lagc-peru.com'; //correo de soporte
+* var $lagcurl = 'http://matriculas.herokuapp.com/'; //URL de la aplición
 
 ## Base de datos ##
 * var $lagclocal = 'localhost'; //servidor

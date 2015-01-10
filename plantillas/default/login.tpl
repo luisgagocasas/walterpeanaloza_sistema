@@ -13,7 +13,7 @@
 				<figure class="logo">
 					<a href="<?=$config->lagcurl; ?>" title="<?=$bdconfig['nombreapp']; ?>">
 						<!--<img src="utilidades/imagenes/<? $bdconfig['logo']; ?>" />-->
-						<span class="logotext"><?=$bdconfig['nombreapp']; ?></span>
+						<span class="logotext"><?php echo $bdconfig['nombreapp']; ?></span>
 					</a>
 				</figure>
 			</header>
