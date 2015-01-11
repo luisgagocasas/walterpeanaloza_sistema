@@ -1,7 +1,7 @@
 <?php
+$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+$db = substr($url["path"], 1);
 class LagcConfig {
-    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-    $db = substr($url["path"], 1);
     //Datos del Sitio
     var $lagcmail = 'hola@luisgagocasas.com';
     var $lagcurl = 'http://matriculas.herokuapp.com/';
