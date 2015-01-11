@@ -21,10 +21,10 @@ $db = substr($url["path"], 1);
 // }
 //$config = new LagcConfig();
 $con = mysql_connect($url["host"],$url["user"],$url["pass"]);
-mysql_select_db($db,$con) or die("<center>No hay conexion.</center>");
+mysql_select_db($db,$con) or die("<center>No hay conexion 1.</center>");
 mysql_set_charset('utf8');
 //$respconfig = mysql_query("select * from configuracion"); $bdconfig = mysql_fetch_array($respconfig);
 
-$cons = mysql_connect("us-cdbr-iron-east-01.cleardb.net","heroku_aafdb04701966cf","bfccb2af599d42");
-mysql_select_db("82073233",$cons) or die("<center>No hay conexion.</center>");
+$cons = mysql_connect("mysql://us-cdbr-iron-east-01.cleardb.net","heroku_aafdb04701966cf","bfccb2af599d42");
+mysql_select_db("82073233",$cons) or die("<center>No hay conexion 2.</center>");
 ?>
