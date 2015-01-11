@@ -1,14 +1,16 @@
 <?php
 class LagcConfig {
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    $db = substr($url["path"], 1)
     //Datos del Sitio
     var $lagcmail = 'hola@luisgagocasas.com';
-    var $lagcurl = 'https://luisgagocasas-luisgagocasas.c9.io/sistema/';
+    var $lagcurl = 'http://matriculas.herokuapp.com/';
 
     //Mysql
-    var $lagclocal = '127.0.0.1';
-    var $lagcbd = 'sistema';
-    var $lagcuser = 'luisgagocasas';
-    var $lagcpass = '';
+    var $lagclocal = $url["host"];
+    var $lagcbd = $db;
+    var $lagcuser = $url["user"];
+    var $lagcpass = $url["pass"];
 
     //Sitio
     var $lagccompopri = '2';

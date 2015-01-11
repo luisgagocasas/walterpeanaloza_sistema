@@ -36,4 +36,4 @@ Foto de perfil del personal
 Donde se debe guardar las plantillas desarrolladas por el front-end
 
 ### index.php y /funciones/componentes.php ###
-Se encargan de generar el entorno de la aplición
+Se encargan de generar el entorno de la aplicación
