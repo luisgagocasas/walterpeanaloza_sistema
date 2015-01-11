@@ -1,6 +1,6 @@
 <?php
 $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-$db = substr($url["path"], 1);
+echo $url["host"]." - ".$url["path"]." - ".$url["user"]." - ".$url["pass"];
 class LagcConfig {
     //Datos del Sitio
     var $lagcmail = 'hola@luisgagocasas.com';
@@ -8,7 +8,7 @@ class LagcConfig {
 
     //Mysql
     var $lagclocal = $url["host"];
-    var $lagcbd = $db;
+    var $lagcbd = substr($url["path"], 1);
     var $lagcuser = $url["user"];
     var $lagcpass = $url["pass"];
 
