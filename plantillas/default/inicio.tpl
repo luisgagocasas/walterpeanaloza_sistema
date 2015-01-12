@@ -81,7 +81,7 @@
 				    </div>
 				    <div class="col-10-12 mostrarc">
 				           <?=Componente::Mostrar(); ?>
-							</br></br>
+							<br/><br/>
 				    </div>
 				</div>
 			</div>
