@@ -1,16 +1,21 @@
 <?php
-// $cons = mysql_connect("us-cdbr-iron-east-01.cleardb.net","bfccb2af599d42","82073233");
-// mysql_select_db("heroku_aafdb04701966cf",$cons) or die("<center>No hay conexion 2.</center>");
 class LagcConfig {
     //Datos del Sitio
     var $lagcmail = 'hola@luisgagocasas.com';
-    var $lagcurl = 'http://matriculas.herokuapp.com/';
+    // var $lagcurl = 'https://matriculas.herokuapp.com/';
 
     //Mysql
-    var $lagclocal = 'us-cdbr-iron-east-01.cleardb.net';
-    var $lagcbd = 'heroku_aafdb04701966cf';
-    var $lagcuser = 'bfccb2af599d42';
-    var $lagcpass = '82073233';
+    // var $lagclocal = 'us-cdbr-iron-east-01.cleardb.net';
+    // var $lagcbd = 'heroku_aafdb04701966cf';
+    // var $lagcuser = 'bfccb2af599d42';
+    // var $lagcpass = '82073233';
+
+    var $lagcurl = 'https://luisgagocasas-luisgagocasas.c9.io/sistema/';
+
+    var $lagclocal = '127.0.0.1';
+    var $lagcbd = 'sistema';
+    var $lagcuser = 'luisgagocasas';
+    var $lagcpass = '';
 
     //Sitio
     var $lagccompopri = '2';

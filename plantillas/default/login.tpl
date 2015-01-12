@@ -43,14 +43,14 @@
 					</form>
 				</div>
 			</div>
-			<!--<footer class="pie_login">-->
-			<!--	<div class="izquierdo">-->
-			<!--		Todos los derechos reservados.<br>Copyright © <?=date(Y); ?>-->
-			<!--	</div>-->
-			<!--	<div class="derecho">-->
-			<!--		Creado con <a href="http://lagc-peru.com/" target="_blank" /><img src="plantillas/default/img/logo.png" /></a>-->
-			<!--	</div>-->
-			<!--</footer>-->
+			<footer class="pie_login">
+				<div class="izquierdo">
+					Todos los derechos reservados.<br>Copyright © <?=date(Y); ?>
+				</div>
+				<div class="derecho">
+					Creado con <a href="http://lagc-peru.com/" target="_blank" /><img src="plantillas/default/img/logo.png" /></a>
+				</div>
+			</footer>
 		</div>
 	</body>
 </html>
