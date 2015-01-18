@@ -2,12 +2,14 @@
 class Usuarios{
 	static function inicio(){ ?>
 		<div class="tlcabecera">
-			<a href="?lagc=usuarios" title="Lista de Usuarios" class="menucompo">
+			<a href="?lagc=usuarios" class="menucompo">
 				<img src="plantillas/default/img/lista.png"><b>Todos</b></a>
-			<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
+			<a href="?lagc=usuarios&id=3&ver=true" class="menucompo">
+				<img src="plantillas/default/img/lista.png">Padres</a>
+			<a href="?lagc=usuarios&id=2&ver=true" class="menucompo">
+				<img src="plantillas/default/img/lista.png">Alumnos</a>
+			<a href="?lagc=usuarios&id=1&ver=true" class="menucompo">
 				<img src="plantillas/default/img/lista.png">Administradores</a>
-			<a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Trabajadores</a>
 			<form method="get" action="" class="frm_validate" style="display: inline-block;float: right;">
 				<input type="hidden" name="lagc" value="usuarios">
 				<input type="hidden" name="id" value="true">
@@ -23,6 +25,7 @@ class Usuarios{
             <li>Apellidos</li>
             <li>Correo</li>
             <li>Estado</li>
+            <li>Tipo</li>
             <li><b>Registros (<?=$rows; ?>)</b></li>
         </ul>
         <form action="" id="eliminarr" method="post">
@@ -30,7 +33,7 @@ class Usuarios{
         while($cont = mysql_fetch_array($respcont)){
 	        echo "<ul class=\"resultados\">\n";
 	        if(Componente::permisos($_COOKIE["lgpermisos"], 1, 2, "", "")){
-		        if($cont['nivel']==4){ echo "<li style=\"width: 30px;\"><input name=\"checkbox[]\" type=\"checkbox\" value=\"".$cont['id']."\" alt=\"1\" onChange=\"suma(this)\"></li>"; }
+		        if($cont['nivel']==4 or $cont['nivel']==3){ echo "<li style=\"width: 30px;\"><input name=\"checkbox[]\" type=\"checkbox\" value=\"".$cont['id']."\" alt=\"1\" onChange=\"suma(this)\"></li>"; }
 		        else { echo "<li style=\"width: 30px;\"></li>"; }
 		    }
 	        echo "<li>".$cont['dni']."</li>\n";
@@ -38,6 +41,7 @@ class Usuarios{
 		    echo "<li>".$cont['apellidop']." ".$cont['apellidom']."</li>\n";
 	        echo "<li>".$cont['email']."</li>\n";
 	        echo "<li>".Usuarios::estado($cont['estado'])."</li>\n";
+	        echo "<li>".Usuarios::que_tipo_es($cont['nivel'])."</li>";
 	        if(Componente::permisos($_COOKIE["lgpermisos"], 1, 2, "", "")){
 		        echo "<li>
 		        <a href=\"?lagc=usuarios&id=".$cont['id']."&editar=".LGlobal::Url_Amigable($cont['nombres'])."\" title=\"Editar Participante\" class=\"btnopcion\">
@@ -94,8 +98,6 @@ class Usuarios{
 			$con = mysql_connect($config->lagclocal,$config->lagcuser,$config->lagcpass);
 			mysql_select_db($config->lagcbd,$con);
 			/*Imagen de perfil*/
-			if(!empty($_POST['sedes'])){ $sedes = implode ('|', $_POST["sedes"]); }
-			else { $sedes = ""; }
 			if (!empty($_FILES['archivo']['name'])) {
 				if ($_FILES['archivo']["error"] > 0){ echo "Error: ".$_FILES['archivo']['error']."<br />"; }
 				else {
@@ -120,13 +122,10 @@ class Usuarios{
 				$ausuario = "usuario='".$_POST['usuario']."', ";
 			}
 			/* */
-			$resppermisos = mysql_query("select * from permisos where id='".$_POST['permisos']."'");
-			$permisos = mysql_fetch_array($resppermisos);
-			$nivel = $permisos['nivel'];
-			$sql = "UPDATE usuarios SET $apassword $ausuario email='".$_POST['email']."', nombres='".$_POST['nombres']."', apellidop='".$_POST['apellidop']."', apellidom='".$_POST['apellidom']."', permisos='".$_POST['permisos']."', nivel='".$nivel."', imagen='".$nombreft."', dni='".$_POST['dni']."', codigo='".$_POST['codigo']."', cargo='".$_POST['cargo']."', fechanacimiento='".$_POST['cumpleanios']."', departamento='".$_POST['departamento']."', celular='".$_POST['cel']."', fechaingresoempresa='".$_POST['fempresa']."', gsanguineo='".$_POST['gsanguineo']."', estado='".$_POST['estado']."', genero='".$_POST['radGener']."', modificadoel='".time()."', comentario='".$_POST['comentario']."', sede_id='".$sedes."' WHERE id='".$id."'";
+			$sql = "UPDATE usuarios SET $apassword $ausuario email='".$_POST['email']."', nombres='".$_POST['nombres']."', apellidop='".$_POST['apellidop']."', apellidom='".$_POST['apellidom']."', nivel='".$_POST['nivel']."', imagen='".$nombreft."', dni='".$_POST['dni']."', codigo='".$_POST['codigo']."', direccion='".$_POST['direccion']."', fechanacimiento='".$_POST['cumpleanios']."', celular='".$_POST['cel']."', gsanguineo='".$_POST['gsanguineo']."', estado='".$_POST['estado']."', genero='".$_POST['radGener']."', modificadoel='".time()."', comentario='".$_POST['comentario']."', distrito_id='".$_POST['distrito']."', problemas='".$_POST['problemas']."' WHERE id='".$id."'";
 			$Query = mysql_query ($sql, $con) or die ("Error: <b>" . mysql_error() . "</b>");
 			mysql_close($con);
-			echo "<script type=\"text/javascript\"> setTimeout(\"window.top.location='?lagc=usuarios'\", 1000) </script><br><br><center><h3>".$_POST['nombres']." ".$_POST['apellidop'].$_POST['apellidom'].".<br>Se guardo correctamente.</h3></center>";
+			echo "<script type=\"text/javascript\"> setTimeout(\"window.top.location='?lagc=usuarios'\", 1000) </script><br/><br/><center><h3>".$_POST['nombres']." ".$_POST['apellidop'].$_POST['apellidom'].".<br/>Se guardo correctamente.</h3></center>";
 		}
 	}
 	static function verperfil($id, $titulo){
@@ -137,12 +136,12 @@ class Usuarios{
 	}
 	static function buscar($palabra){ ?>
 		<div class="tlcabecera">
-			<a href="?lagc=usuarios" title="Lista de Usuarios" class="menucompo">
+			<a href="?lagc=usuarios" class="menucompo">
 				<img src="plantillas/default/img/lista.png"><b>Todos</b></a>
-			<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
+			<a href="?lagc=usuarios&id=2&ver=true" class="menucompo">
+				<img src="plantillas/default/img/lista.png">Alumnos</a>
+			<a href="?lagc=usuarios&id=1&ver=true" class="menucompo">
 				<img src="plantillas/default/img/lista.png">Administradores</a>
-			<a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Trabajadores</a>
 			<form method="get" action="" class="frm_validate" style="display: inline-block;float: right;">
 				<input type="hidden" name="lagc" value="usuarios">
 				<input type="hidden" name="id" value="true">
@@ -220,12 +219,14 @@ class Usuarios{
 		<?php
 	}
 	static function borrar($id, $titulo) { ?>
-		<a href="?lagc=usuarios" title="Lista de usuarios" class="menucompo">
+		<a href="?lagc=usuarios" title="Lista de Usuarios" class="menucompo">
 			<img src="plantillas/default/img/lista.png">Todos</a>
-		<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
-			<img src="plantillas/default/img/lista.png">Administradores</a>
+		<a href="?lagc=usuarios&id=3&ver=true" title="Lista de entradas" class="menucompo">
+			<img src="plantillas/default/img/lista.png">Padres</a>
 		<a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
-			<img src="plantillas/default/img/lista.png">Trabajadores</a>
+		<img src="plantillas/default/img/lista.png">Alumnos</a>
+		<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
+		<img src="plantillas/default/img/lista.png">Administradores</a>
     	<?php
 		$contenidos = mysql_query("select * from usuarios where id='".$id."'");
 		$conte = mysql_fetch_array($contenidos);
@@ -258,12 +259,14 @@ class Usuarios{
 	static function ver($id){
 		if($id=="1"){ ?>
 			<div class="tlcabecera">
-				<a href="?lagc=usuarios" title="Lista de usuarios" class="menucompo">
+				<a href="?lagc=usuarios" class="menucompo">
 					<img src="plantillas/default/img/lista.png">Todos</a>
-				<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
+				<a href="?lagc=usuarios&id=3&ver=true" class="menucompo">
+					<img src="plantillas/default/img/lista.png">Padres</a>
+				<a href="?lagc=usuarios&id=2&ver=true" class="menucompo">
+					<img src="plantillas/default/img/lista.png">Alumnos</a>
+				<a href="?lagc=usuarios&id=1&ver=true" class="menucompo">
 					<img src="plantillas/default/img/lista.png"><b>Administradores</b></a>
-				<a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
-					<img src="plantillas/default/img/lista.png">Trabajadores</a>
 					<form method="get" action="" class="frm_validate" style="display: inline-block;float: right;">
 						<input type="hidden" name="lagc" value="usuarios">
 						<input type="hidden" name="id" value="true">
@@ -300,12 +303,14 @@ class Usuarios{
 		}
 		else if($id=="2"){ ?>
 			<div class="tlcabecera">
-				<a href="?lagc=usuarios" title="Lista de usuarios" class="menucompo">
+				<a href="?lagc=usuarios" class="menucompo">
 					<img src="plantillas/default/img/lista.png">Todos</a>
-				<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
+				<a href="?lagc=usuarios&id=3&ver=true" class="menucompo">
+					<img src="plantillas/default/img/lista.png">Padres</a>
+				<a href="?lagc=usuarios&id=2&ver=true" class="menucompo">
+					<img src="plantillas/default/img/lista.png"><b>Alumnos</b></a>
+				<a href="?lagc=usuarios&id=1&ver=true" class="menucompo">
 					<img src="plantillas/default/img/lista.png">Administradores</a>
-				<a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
-					<img src="plantillas/default/img/lista.png"><b>Trabajadores</b></a>
 				<form method="get" action="" class="frm_validate" style="display: inline-block;float: right;">
 					<input type="hidden" name="lagc" value="usuarios">
 					<input type="hidden" name="id" value="true">
@@ -313,6 +318,89 @@ class Usuarios{
 				</form>
 			</div>
 	        <?php $respcont = mysql_query("select * from usuarios where nivel='4' ORDER BY id DESC");
+	        $rows = mysql_num_rows($respcont); ?>
+			<ul class="titulos">
+				<li style="width: 30px;"></li>
+		        <li>DNI</li>
+		        <li>Nombre</li>
+		        <li>Apellidos</li>
+		        <li>Correo</li>
+		        <li>Estado</li>
+		        <li><b>Registros (<?=$rows; ?>)</b></li>
+	        </ul>
+	        <form action="" id="eliminarr" method="post">
+	        <?php
+	        while($cont = mysql_fetch_array($respcont)){
+		        echo "<ul class=\"resultados\">\n";
+		        if(Componente::permisos($_COOKIE["lgpermisos"], 1, 2, "", "")){
+		        	echo "<li style=\"width: 30px;\"><input name=\"checkbox[]\" type=\"checkbox\" value=\"".$cont['id']."\" alt=\"1\" onChange=\"suma(this)\"></li>";
+		        }
+		        echo "<li>".$cont['dni']."</li>\n";
+		        echo "<li><a href=\"?lagc=usuarios&id=".$cont['id']."&verperfil=".LGlobal::Url_Amigable($cont['nombres'])."\">".$cont['nombres']."</a></li>";
+		        echo "<li>".$cont['apellidop']." ".$cont['apellidom']."</li>\n";
+		        echo "<li>".$cont['email']."</li>\n";
+		        echo "<li>".Usuarios::estado($cont['estado'])."</li>\n";
+		        if(Componente::permisos($_COOKIE["lgpermisos"], 1, 2, "", "")){
+			        echo "<li>
+			        <a href=\"?lagc=usuarios&id=".$cont['id']."&editar=".LGlobal::Url_Amigable($cont['nombres'])."\" title=\"Editar Participante\" class=\"btnopcion\">
+			        	<img src=\"plantillas/default/img/editar.png\" />
+			        </a></li>";
+			    }
+		        echo "</ul>";
+	        }
+	        ?>
+		    </form>
+	        <div class="mensaje" id="mensaje">
+	        	<?php
+	        	if(empty($_POST['checkbox'])){ ?>
+			        Ha seleccionado <input type="text" id="numero" disabled readonly="true" value="0" size="1" class="numero"> usuarios.<br/>
+			        ¿desea eliminarlos?<br/>
+			        <a href="#" id="checkeff" class="btnm">No</a>
+			        <a href="#" id="eliminar" class="btnm">Si</a>
+	        	<?php } ?>
+		        <?php
+		        if($_POST['checkbox']){
+			        $config = new LagcConfig(); //Conexion
+					$con = mysql_connect($config->lagclocal,$config->lagcuser,$config->lagcpass);
+					mysql_select_db($config->lagcbd,$con);
+					$sql = "delete from usuarios WHERE id in (".implode(",", $_POST['checkbox']).")";
+					$Query = mysql_query ($sql, $con) or die ("Error: <b>" . mysql_error() . "</b>");
+					echo "Registros eliminados.";
+					echo "<script type=\"text/javascript\"> setTimeout(\"window.top.location='?lagc=usuarios'\", 1500) </script>";
+					?>
+					<script>
+						$(document).ready(function(){
+							$("#mensaje").css({"display":"block"});
+						});
+					</script>
+					<?php
+		        }
+		        ?>
+		        <div id="mensaje_editar">
+		        	<hr>
+		        	Desea editar el registro?<br/>
+			        <a href="#" id="editar" class="btnm">Si</a>
+		        </div>
+	        </div>
+	        <?php
+	    }
+	    else if($id=="3"){ ?>
+			<div class="tlcabecera">
+				<a href="?lagc=usuarios" class="menucompo">
+					<img src="plantillas/default/img/lista.png">Todos</a>
+				<a href="?lagc=usuarios&id=3&ver=true" class="menucompo">
+					<img src="plantillas/default/img/lista.png"><b>Padres</b></a>
+				<a href="?lagc=usuarios&id=2&ver=true" class="menucompo">
+					<img src="plantillas/default/img/lista.png">Alumnos</a>
+				<a href="?lagc=usuarios&id=1&ver=true" class="menucompo">
+					<img src="plantillas/default/img/lista.png">Administradores</a>
+				<form method="get" action="" class="frm_validate" style="display: inline-block;float: right;">
+					<input type="hidden" name="lagc" value="usuarios">
+					<input type="hidden" name="id" value="true">
+				    <input type="text" name="buscar" required placeholder="Ingrese algo que buscar">
+				</form>
+			</div>
+	        <?php $respcont = mysql_query("select * from usuarios where nivel='3' ORDER BY id DESC");
 	        $rows = mysql_num_rows($respcont); ?>
 			<ul class="titulos">
 				<li style="width: 30px;"></li>
@@ -387,7 +475,7 @@ class Usuarios{
 			<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
 				<img src="plantillas/default/img/lista.png">Administradores</a>
 			<a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Trabajadores</a>
+				<img src="plantillas/default/img/lista.png">Alumnos</a>
 		</div></br></br></br>
 		<?php
 		if (empty($_POST['Submit'])) {
@@ -411,10 +499,10 @@ class Usuarios{
 							echo "<p style=\"color: #F00;\"><b>DNI ó Código duplicado: </b> ".addslashes($data[0])." ".addslashes($data[1]).", ".addslashes($data[2])." - ".addslashes($data[3]).", ".addslashes($data[4])."</p>";
 						}
 						else {
-				            mysql_query("INSERT INTO usuarios (usuario, password, apellidop, apellidom, nombres, dni, codigo, cargo, fechanacimiento, fechaingresoempresa, email, celular, gsanguineo, creadoel, ascreated, genero) VALUES
+				            mysql_query("INSERT INTO usuarios (usuario, password, apellidop, apellidom, nombres, dni, codigo, direccion, fechanacimiento, email, celular, gsanguineo, creadoel, ascreated, genero, nivel) VALUES
 				                (
-				                	'".addslashes($data[4])."',
-				                	'".addslashes(md5($data[4]))."',
+				                	'".addslashes($data[3])."',
+				                	'".addslashes(md5($data[3]))."',
 				                    '".addslashes($data[0])."',
 				                    '".addslashes($data[1])."',
 				                    '".addslashes($data[2])."',
@@ -425,18 +513,19 @@ class Usuarios{
 				                    '".addslashes($data[7])."',
 				                    '".addslashes($data[8])."',
 				                    '".addslashes($data[9])."',
-				                    '".addslashes($data[10])."',
 				                    '".time()."',
 				                    '1',
-				                    '1'
+				                    '".Usuarios::letter_binari(addslashes($data[10]))."',
+				                    '".Usuarios::letter_binari_ques(addslashes($data[11]))."'
 				                )
 				            ");
 						echo "<p><b>Se a creado: </b>
 									".addslashes($data[0])."
 									".addslashes($data[1])."
-									".addslashes($data[2])."' -
+									".addslashes($data[2])." -
 				                    ".addslashes($data[3]).",
-				                    ".addslashes($data[4])."
+				                    ".addslashes($data[4])." -
+				                    ".addslashes($data[11])."
 				                    </p>";
 				        }
 			        }
@@ -447,12 +536,14 @@ class Usuarios{
 	}
 	static function nuevo(){ ?>
 		<div class="tlcabecera">
-			<a href="?lagc=usuarios" title="Lista de Usuarios" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Todos</a>
-			<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Administradores</a>
-			<a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Trabajadores</a>
+		    <a href="?lagc=usuarios" class="menucompo">
+		        <img src="plantillas/default/img/lista.png">Todos</a>
+		    <a href="?lagc=usuarios&id=3&ver=true" title="Lista de entradas" class="menucompo">
+				<img src="plantillas/default/img/lista.png">Padres</a>
+		    <a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
+		        <img src="plantillas/default/img/lista.png">Alumnos</a>
+		    <a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
+		        <img src="plantillas/default/img/lista.png">Administradores</a>
 		</div>
 		<?php
 		if (empty($_POST['nombres'])) {
@@ -465,11 +556,10 @@ class Usuarios{
 				<p><a href='javascript:history.go(-1)'>Volver atrás</a></p>";
 			}
 			else {
-				$config = new LagcConfig(); //Conexion
+				 //Conexion
+				$config = new LagcConfig();
 				$con = mysql_connect($config->lagclocal,$config->lagcuser,$config->lagcpass);
 				mysql_select_db($config->lagcbd,$con);
-				if($_POST["sedes"]){ $sedes = implode ('|', $_POST["sedes"]); }
-				else { $sedes=""; }
 				// id nuevo user
 				$rs = mysql_query("SELECT MAX(id) AS id FROM usuarios");
 				if ($row = mysql_fetch_row($rs)) {
@@ -492,31 +582,29 @@ class Usuarios{
 					}
 				}
 				else { $nombreft = ""; }
-				$resppermisos = mysql_query("select * from permisos where id='".$_POST['permisos']."'");
-				$permisos = mysql_fetch_array($resppermisos);
-				$nivel = $permisos['nivel'];
-				if($nivel=="4"){
+				if($_POST['nivel']=="4"){
 					if(empty($_POST['password'])){ $pashay = $_POST['dni']; }
 					else { $pashay = $_POST['password']; }
-					$sql = "INSERT INTO usuarios (usuario, password, email, nombres, apellidop, apellidom, permisos, nivel, dni, codigo, cargo, fechanacimiento, departamento, celular, fechaingresoempresa, gsanguineo, estado, genero, creadoel, ascreated, comentario, imagen, sede_id) VALUES ('".$_POST['dni']."', '".md5($pashay)."', '".$_POST['email']."', '".$_POST['nombres']."', '".$_POST['apellidop']."', '".$_POST['apellidom']."', '".$_POST['permisos']."', '".$nivel."', '".$_POST['dni']."', '".$_POST['codigo']."', '".$_POST['cargo']."', '".$_POST['cumpleanios']."', '".$_POST['departamento']."', '".$_POST['cel']."', '".$_POST['fempresa']."', '".$_POST['gsanguineo']."', '".$_POST['estado']."', '".$_POST['radGener']."', '".time()."', '0', '".$_POST['comentario']."', '".$nombreft."', '".$sedes."')";
+					$sql = "INSERT INTO usuarios (usuario, password, email, nombres, apellidop, apellidom, nivel, dni, codigo, fechanacimiento, celular, gsanguineo, estado, genero, creadoel, ascreated, comentario, imagen, distrito_id, direccion, problemas) VALUES ('".$_POST['dni']."', '".md5($pashay)."', '".$_POST['email']."', '".$_POST['nombres']."', '".$_POST['apellidop']."', '".$_POST['apellidom']."', '".$_POST['nivel']."', '".$_POST['dni']."', '".$_POST['codigo']."', '".$_POST['cumpleanios']."', '".$_POST['cel']."', '".$_POST['gsanguineo']."', '".$_POST['estado']."', '".$_POST['radGener']."', '".time()."', '0', '".$_POST['comentario']."', '".$nombreft."', '".$_POST['distrito']."', '".$_POST['direccion']."', '".$_POST['problemas']."')";
 				}
 				else {
-					$sql = "INSERT INTO usuarios (usuario, password, email, nombres, apellidop, apellidom, permisos, nivel, dni, codigo, cargo, fechanacimiento, departamento, celular, fechaingresoempresa, gsanguineo, estado, genero, creadoel, ascreated, comentario, imagen, sede_id) VALUES ('".$_POST['usuario']."', '".md5($_POST['password'])."', '".$_POST['email']."', '".$_POST['nombres']."', '".$_POST['apellidop']."', '".$_POST['apellidom']."', '".$_POST['permisos']."', '".$nivel."', '".$_POST['dni']."', '".$_POST['codigo']."', '".$_POST['cargo']."', '".$_POST['cumpleanios']."', '".$_POST['departamento']."', '".$_POST['cel']."', '".$_POST['fempresa']."', '".$_POST['gsanguineo']."', '".$_POST['estado']."', '".$_POST['radGener']."', '".time()."', '0', '".$_POST['comentario']."', '".$nombreft."', '".$sedes."')";
+					$sql = "INSERT INTO usuarios (usuario, password, email, nombres, apellidop, apellidom, nivel, dni, codigo, fechanacimiento, celular, gsanguineo, estado, genero, creadoel, ascreated, comentario, imagen, distrito_id, direccion, problemas) VALUES ('".$_POST['usuario']."', '".md5($_POST['password'])."', '".$_POST['email']."', '".$_POST['nombres']."', '".$_POST['apellidop']."', '".$_POST['apellidom']."', '".$_POST['nivel']."', '".$_POST['dni']."', '".$_POST['codigo']."', '".$_POST['cumpleanios']."', '".$_POST['cel']."', '".$_POST['gsanguineo']."', '".$_POST['estado']."', '".$_POST['radGener']."', '".time()."', '0', '".$_POST['comentario']."', '".$nombreft."', '".$_POST['distrito']."', '".$_POST['direccion']."', '".$_POST['problemas']."')";
 				}
 				mysql_query($sql,$con);
-				echo "<script type=\"text/javascript\"> setTimeout(\"window.top.location='?lagc=usuarios'\", 1000) </script><br><br><center><h3>".$_POST['nombres']." ".$_POST['apellidop'].$_POST['apellidom'].".<br>Se guardo correctamente.</h3></center>";
+				echo "<script type=\"text/javascript\"> setTimeout(\"window.top.location='?lagc=usuarios'\", 1000) </script><br><br><center><h3>".$_POST['nombres']." ".$_POST['apellidop'].$_POST['apellidom'].".<br>Se a creado correctamente.</h3></center>";
 			}
-		} ?>
-	<?php
+		}
 	}
 	static function exportar(){ ?>
 		<div class="tlcabecera">
-			<a href="?lagc=usuarios" title="Lista de Usuarios" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Todos</a>
-			<a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Administradores</a>
-			<a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
-				<img src="plantillas/default/img/lista.png">Trabajadores</a>
+		    <a href="?lagc=usuarios" class="menucompo">
+		        <img src="plantillas/default/img/lista.png">Todos</a>
+		    <a href="?lagc=usuarios&id=3&ver=true" title="Lista de entradas" class="menucompo">
+				<img src="plantillas/default/img/lista.png">Padres</a>
+		    <a href="?lagc=usuarios&id=2&ver=true" title="Lista de entradas" class="menucompo">
+		        <img src="plantillas/default/img/lista.png">Alumnos</a>
+		    <a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
+		        <img src="plantillas/default/img/lista.png">Administradores</a>
 		</div>
 		</br></br></br>
 		<center>
@@ -546,6 +634,23 @@ class Usuarios{
 		if($var1=="0"){ $final = "Formulario"; }
 		else if($var1=="1"){ $final = "Importado"; }
 		return $final;
+	}
+	function letter_binari($val1){ //importar
+		if($val1=="m"){ $fin = "1"; }
+		else if($val1=="h"){ $fin = "0"; }
+		return $fin;
+	}
+	function letter_binari_ques($val1){ //importar
+		if($val1=="padre"){ $fin = "3"; }
+		else if($val1=="alumno"){ $fin = "4"; }
+		return $fin;
+	}
+	function que_tipo_es($val1){
+		if($val1=="1"){ $fin = "Administrador"; }
+		else if($val1=="2"){ $fin = "Supervisor"; }
+		else if($val1=="3"){ $fin = "Padre"; }
+		else if($val1=="4"){ $fin = "Alumno"; }
+		return $fin;
 	}
 }
 ?>

@@ -22,7 +22,7 @@ function sede_nombre($val1,$val2){
 ?>
 <div style="margin:10px auto 0px auto;">
 	Bienvenido, <b><?=$_COOKIE["lgnombres"]." ".$_COOKIE["lgapellidos"]; ?></b></br>
-	A contunuación te presentamos el resumen de tus actividades del colegio.</br></br>
+	A continuación te presentamos el resumen de tus actividades del colegio.</br></br>
 	<?php
 	$respuser = mysql_query("select * from usuarios where id='".$_COOKIE["user"]."'");
     $usuario = mysql_fetch_array($respuser);
@@ -30,7 +30,7 @@ function sede_nombre($val1,$val2){
 </div>
 <ul class="titulos" style="text-align: center;">
 	<li style="width: 25%;">Sedes</li>
-	<li style="width: 25%;">Ingreso a la empresa</li>
+	<li style="width: 25%;">Periodo</li>
 	<li style="width: 25%;">Estado</li>
     <li style="width: 25%;">Asistencia</li>
 </ul>
@@ -93,7 +93,7 @@ function sede_nombre($val1,$val2){
     	<?php
     	$respcont = mysql_query("select * from com_seguro_asignar where id_usuario=".$_COOKIE["user"]."");
         $rows = mysql_num_rows($respcont); ?>
-    	<center><h2>Seguro (<?=$rows; ?>)</h2></center>
+    	<center><h2>Pensiones (<?=$rows; ?>)</h2></center>
     	<ul class="titulos">
 				<li style="width: 150px;">Sede</li>
 		        <li style="width: auto;">Seguro</li>

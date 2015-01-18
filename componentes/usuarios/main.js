@@ -1,11 +1,21 @@
 $(document).ready(function(){
+    if($("#txtpermisos").find("option:selected").attr("value")=="4"){
+        $("#m1").css({"display":"none"});
+        $("#m2").css({"display":"none"});
+        $("#codmodular").css({"display":"block"});
+    }
+    else {
+        $("#codmodular").css({"display":"none"});
+    }
     $("#txtpermisos").change(function(){
-        if($(this).find("option:selected").attr("title")!="4"){
+        if($(this).find("option:selected").attr("value")!="4"){
             $("#m1").css({"display":"block"});
             $("#m2").css({"display":"block"});
+            $("#codmodular").css({"display":"none"});
         }else{
             $("#m1").css({"display":"none"});
             $("#m2").css({"display":"none"});
+            $("#codmodular").css({"display":"block"});
         }
     });
     $("#eliminar").click(function() {
