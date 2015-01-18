@@ -2,15 +2,15 @@
 class LagcConfig {
     //Datos del Sitio
     var $lagcmail = 'hola@luisgagocasas.com';
+    var $lagcurl = $_SERVER['SERVER_NAME'];
     // var $lagcurl = 'https://matriculas.herokuapp.com/';
 
     //Mysql
-    // var $lagclocal = 'us-cdbr-iron-east-01.cleardb.net';
-    // var $lagcbd = 'heroku_aafdb04701966cf';
-    // var $lagcuser = 'bfccb2af599d42';
-    // var $lagcpass = '82073233';
+    var $lagclocal = 'us-cdbr-iron-east-01.cleardb.net';
+    var $lagcbd = 'heroku_aafdb04701966cf';
+    var $lagcuser = 'bfccb2af599d42';
+    var $lagcpass = '82073233';
 
-    var $lagcurl = 'https://luisgagocasas-luisgagocasas.c9.io/sistema/';
 
     var $lagclocal = '127.0.0.1';
     var $lagcbd = 'sistema';
