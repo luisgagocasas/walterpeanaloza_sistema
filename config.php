@@ -2,8 +2,8 @@
 class LagcConfig {
     //Datos del Sitio
     var $lagcmail = 'hola@luisgagocasas.com';
-    var $lagcurl = $_SERVER['SERVER_NAME'];
-    // var $lagcurl = 'https://matriculas.herokuapp.com/';
+    //var $lagcurl = $_SERVER['SERVER_NAME'];
+    var $lagcurl = 'https://matriculas.herokuapp.com/';
 
     //Mysql
     var $lagclocal = 'us-cdbr-iron-east-01.cleardb.net';
