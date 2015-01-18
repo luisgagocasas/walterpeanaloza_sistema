@@ -12,10 +12,10 @@ class LagcConfig {
     var $lagcpass = '82073233';
 
 
-    var $lagclocal = '127.0.0.1';
-    var $lagcbd = 'sistema';
-    var $lagcuser = 'luisgagocasas';
-    var $lagcpass = '';
+    // var $lagclocal = '127.0.0.1';
+    // var $lagcbd = 'sistema';
+    // var $lagcuser = 'luisgagocasas';
+    // var $lagcpass = '';
 
     //Sitio
     var $lagccompopri = '2';
