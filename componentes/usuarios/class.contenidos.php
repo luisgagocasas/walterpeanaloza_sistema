@@ -572,7 +572,7 @@ class Usuarios{
 						$tipoft = substr($_FILES['archivo']['type'], 6);
 						$nombreft = $id."_".LGlobal::Url_Amigable($_POST['nombres'].$_POST['apellidop'].$_POST['apellidom']).".".$tipoft;
 						$fotoruta = "imagenes/";
-						echo "<br /><br /><div style=\"margin: 0px auto; width: 350px;\">";
+						echo "<br /><br/><div style=\"margin: 0px auto; width: 350px;\">";
 							echo "<center><h2>Datos de la Imagen</h2></center>";
 							echo "Nombre: ".$nombreft."<br />";
 							echo "Tipo: ".$_FILES['archivo']['type']."<br />";
@@ -606,11 +606,11 @@ class Usuarios{
 		    <a href="?lagc=usuarios&id=1&ver=true" title="Lista de entradas" class="menucompo">
 		        <img src="plantillas/default/img/lista.png">Administradores</a>
 		</div>
-		</br></br></br>
+		<br/><br/><br/>
 		<center>
 			En segundos se descargará automáticamente.</br>
 			<span style="font-size: 14px;color: #A74242;">Clic <a href="<?=$config->lagcurl; ?>componentes/usuarios/exportar.php" style="text-decoration: none;color: #A74242;">" aqui "</a> si no se descarga automáticamente.</span>
-			</br>
+			<br/>
 			<iframe src="<?=$config->lagcurl; ?>componentes/usuarios/exportar.php" frameborder="0" width="0" height="0"></iframe>
 		</center>
 		<?php
@@ -650,6 +650,18 @@ class Usuarios{
 		else if($val1=="2"){ $fin = "Supervisor"; }
 		else if($val1=="3"){ $fin = "Padre"; }
 		else if($val1=="4"){ $fin = "Alumno"; }
+		return $fin;
+	}
+	function binari_letter($val1){ //Exportar
+		if($val1=="1"){ $fin = "m"; }
+		else if($val1=="0"){ $fin = "h"; }
+		return $fin;
+	}
+	function que_tipo_es_ex($val1){ //Exportar
+		if($val1=="1"){ $fin = "administrador"; }
+		else if($val1=="2"){ $fin = "supervisor"; }
+		else if($val1=="3"){ $fin = "padre"; }
+		else if($val1=="4"){ $fin = "alumno"; }
 		return $fin;
 	}
 }

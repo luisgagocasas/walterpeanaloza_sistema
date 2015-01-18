@@ -7,8 +7,8 @@ class LGlobal {
 	   $cadena = str_replace($separador, "",$cadena);
 	   // Convertimos la cadena a minusculas
 	   $cadena = strtolower($cadena);
-	   // Remplazo tildes y eñes
-	   $cadena = strtr($cadena, "áéíóúÁñÑ", "aeiouAnN");
+	   // Remplazo tildes y eï¿½es
+	   $cadena = strtr($cadena, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "aeiouAnN");
 	   // Remplazo cuarquier caracter que no este entre A-Za-z0-9 por un espacio vacio
 	   $cadena = trim(ereg_replace("[^ A-Za-z0-9]", "", $cadena));
 	   // Inserto el separador antes definido
@@ -22,8 +22,8 @@ class LGlobal {
 	   $cadena = str_replace($separador, "",$cadena);
 	   // Convertimos la cadena a minusculas
 	   $cadena = strtolower($cadena);
-	   // Remplazo tildes y eñes
-	   $cadena = strtr($cadena, "áéíóúÁñÑ", "aeiouAnN");
+	   // Remplazo tildes y eï¿½es
+	   $cadena = strtr($cadena, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "aeiouAnN");
 	   // Remplazo cuarquier caracter que no este entre A-Za-z0-9 por un espacio vacio
 	   $cadena = trim(ereg_replace("[^ A-Za-z0-9]", "", $cadena));
 	   // Inserto el separador antes definido
@@ -33,13 +33,13 @@ class LGlobal {
 	static function tiempohace($valor){
 		if(!empty($valor)){
 			// FORMATOS:
-			// segundos    desde 1970 (función time())        hace_tiempo('12313214');
+			// segundos    desde 1970 (funciï¿½n time())        hace_tiempo('12313214');
 			// defecto (variable $formato_defecto)        hace_tiempo('12:01:02 04-12-1999');
 			// tu propio formato                        hace_tiempo('04-12-1999 12:01:02 [n.j.Y H:i:s]');
 			$formato_defecto="H:i:s j-n-Y";
-			// j,d = día
+			// j,d = dï¿½a
 			// n,m = mes
-			// Y = año
+			// Y = aï¿½o
 			// G,H = hora
 			// i = minutos
 			// s = segundos
@@ -76,11 +76,11 @@ class LGlobal {
 			if($ht>=2116800){
 			$dia = date('d',$valor);
 			$mes = date('n',$valor);
-			$año = date('Y',$valor);
+			$aï¿½o = date('Y',$valor);
 			$hora = date('H',$valor);
 			$minuto = date('i',$valor);
 			$mesarray = array('','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-			$fecha = "el $dia de $mesarray[$mes] del $año";
+			$fecha = "el $dia de $mesarray[$mes] del $aï¿½o";
 			}
 			if($ht<30242054.045){$hc=round($ht/2629743.83);if($hc>1){$s="es";}$fecha="hace $hc mes".$s;}
 			if($ht<2116800){$hc=round($ht/604800);if($hc>1){$s="s";}$fecha="hace $hc semana".$s;}
