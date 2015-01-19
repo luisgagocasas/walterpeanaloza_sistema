@@ -4,18 +4,18 @@ class LagcConfig {
     var $lagcmail = 'hola@luisgagocasas.com';
 
     //Mysql Producción
-    //var $lagcurl = 'https://matriculas.herokuapp.com/';
-    // var $lagclocal = 'us-cdbr-iron-east-01.cleardb.net';
-    // var $lagcbd = 'heroku_aafdb04701966cf';
-    // var $lagcuser = 'bfccb2af599d42';
-    // var $lagcpass = '82073233';
+    var $lagcurl = 'https://matriculas.herokuapp.com/';
+    var $lagclocal = 'us-cdbr-iron-east-01.cleardb.net';
+    var $lagcbd = 'heroku_aafdb04701966cf';
+    var $lagcuser = 'bfccb2af599d42';
+    var $lagcpass = '82073233';
 
     //Mysql Desarrollo
-    var $lagcurl = "https://luisgagocasas-luisgagocasas.c9.io/sistema/";
-    var $lagclocal = '127.0.0.1';
-    var $lagcbd = 'sistema';
-    var $lagcuser = 'luisgagocasas';
-    var $lagcpass = '';
+    // var $lagcurl = "https://luisgagocasas-luisgagocasas.c9.io/sistema/";
+    // var $lagclocal = '127.0.0.1';
+    // var $lagcbd = 'sistema';
+    // var $lagcuser = 'luisgagocasas';
+    // var $lagcpass = '';
 
     //Sitio
     var $lagccompopri = '2';
